@@ -15,7 +15,7 @@ class Database:
     self.q = q
     for vector in featureVectors: 
       for k in range(self.getHeight()): # go up the heap until the root
-        currNodeID = self.toID(Database.getKthAncestor(vector,k))
+        currNodeID = self.encode(Database.getKthAncestor(vector,k))
         if currNodeID not in self._middle: 
           self._middle[currNodeID] = vector
         else: 
@@ -38,14 +38,14 @@ class Database:
     return map(getCenter, Database.getKthAncestor(vector,k)[0])
 
   # converts a Node in the heap into its corresponding ID
-  def toID(self, node: tuple[list[int],int]) -> int: 
+  def encode(self, node: tuple[list[int],int]) -> int: 
     res = 0
     for val in node[0]:
       res = res*2**self.q + val + 1
     return res*2**countbits(self.getHeight()) + node[1]
 
   # convert an ID into a Node
-  def toNode(self, id: int) -> tuple[list[int],int]: 
+  def decode(self, id: int) -> tuple[list[int],int]: 
     heightbits = countbits(self.getHeight())
     k = id%2**heightbits
     id >>= heightbits

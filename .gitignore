@@ -1,6 +1,6 @@
 # Prerequisites
 *.d
-.vscode/
+.vscode
 
 # Compiled Object files
 *.slo
@@ -32,3 +32,8 @@
 *.out
 *.app
 test
+
+# Datasets 
+datasets
+
+__pycache__

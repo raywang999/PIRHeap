@@ -7,8 +7,13 @@ class Client:
   def query(vector: list[int], database: Database, server: Server) -> list[int]: 
     queryIDs: list[int] = []
     for k in range(database.getHeight()): 
-      queryIDs.append(database.toID(Database.getKthAncestor(vector,k)))
-    for result in server.pir(queryIDs): 
+      queryIDs.append(database.encode(Database.getKthAncestor(vector,k)))
+    for result in Client.pir(queryIDs, server): 
       if result is not None: 
-        return database.toNode(result)[0]
+        return database.decode(result)[0]
+  
+  # returns a list 
+  def pir(queryBuckets: list[int], server: Server) -> list[int | None]: 
+    # TODO 
+    return map(server.buckets.get, queryBuckets)
     
